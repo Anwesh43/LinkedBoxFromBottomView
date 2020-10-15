@@ -217,4 +217,13 @@ class BoxFromBottomView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BoxFromBottomView {
+            val view : BoxFromBottomView = BoxFromBottomView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
