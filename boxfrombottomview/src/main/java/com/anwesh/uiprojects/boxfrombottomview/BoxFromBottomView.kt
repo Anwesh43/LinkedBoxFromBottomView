@@ -48,8 +48,8 @@ fun Canvas.drawBoxFromBottom(scale : Float, w : Float, h : Float, paint : Paint)
     for (j in 0..1) {
         val bSize : Float = barSize * sf1
         save()
-        translate(barSize + (w - 2 * barSize), h * 0.5f - barSize - (h / 2) * sf2)
-        drawRect(RectF(-bSize / 2, -bSize / 2, bSize, bSize), paint)
+        translate(barSize / 2 + (w - barSize) * j, h * 0.5f - barSize / 2 - (h / 2 - barSize / 2) * sf2)
+        drawRect(RectF(-bSize / 2, -bSize / 2, bSize / 2, bSize / 2), paint)
         restore()
     }
     save()
