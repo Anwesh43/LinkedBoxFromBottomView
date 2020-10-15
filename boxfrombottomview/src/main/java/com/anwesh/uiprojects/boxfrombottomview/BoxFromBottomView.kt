@@ -42,8 +42,7 @@ fun Canvas.drawBoxFromBottom(scale : Float, w : Float, h : Float, paint : Paint)
     val sf1 : Float = sf.divideScale(0, parts)
     val sf2 : Float = sf.divideScale(1, parts)
     val sf3 : Float = sf.divideScale(2, parts)
-    val sf4 : Float = sf.divideScale(3, parts)
-    val pipeW : Float = (w - 2 * barSize) * sf
+    val pipeW : Float = (w - 2 * barSize) * sf3
     save()
     translate(0f, h / 2)
     for (j in 0..1) {
@@ -69,14 +68,16 @@ fun Canvas.drawBFBNode(i : Int, scale : Float, paint : Paint) {
 
 class BoxFromBottomView(ctx : Context) : View(ctx) {
 
-    override fun onDraw(canvas : Canvas) {
+    private val renderer : Renderer = Renderer(this)
 
+    override fun onDraw(canvas : Canvas) {
+        renderer.render(canvas)
     }
 
     override fun onTouchEvent(event : MotionEvent) : Boolean {
         when (event.action){
             MotionEvent.ACTION_DOWN -> {
-
+                renderer.handleTap()
             }
         }
         return true
