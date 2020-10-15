@@ -34,3 +34,35 @@ fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
+
+fun Canvas.drawBoxFromBottom(scale : Float, w : Float, h : Float, paint : Paint) {
+    val barSize : Float = Math.min(w, h) / barFactor
+    val pipeSize : Float = Math.min(w, h) / pipeFactor
+    val sf : Float = scale.sinify()
+    val sf1 : Float = sf.divideScale(0, parts)
+    val sf2 : Float = sf.divideScale(1, parts)
+    val sf3 : Float = sf.divideScale(2, parts)
+    val sf4 : Float = sf.divideScale(3, parts)
+    val pipeW : Float = (w - 2 * barSize) * sf
+    save()
+    translate(0f, h / 2)
+    for (j in 0..1) {
+        val bSize : Float = barSize * sf1
+        save()
+        translate(barSize + (w - 2 * barSize), h * 0.5f - barSize - (h / 2) * sf2)
+        drawRect(RectF(-bSize / 2, -bSize / 2, bSize, bSize), paint)
+        restore()
+    }
+    save()
+    translate(w / 2, 0f)
+    drawRect(RectF(-pipeW / 2, -pipeSize / 2, pipeW / 2, pipeSize / 2), paint)
+    restore()
+    restore()
+}
+
+fun Canvas.drawBFBNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = colors[i]
+    drawBoxFromBottom(scale, w, h, paint)
+}
