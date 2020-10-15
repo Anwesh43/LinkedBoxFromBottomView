@@ -193,4 +193,27 @@ class BoxFromBottomView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BoxFromBottomView) {
+
+        private val animator : Animator = Animator(view)
+        private val bfb : BoxFromBottom = BoxFromBottom(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            bfb.draw(canvas, paint)
+            animator.animate {
+                bfb.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bfb.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
